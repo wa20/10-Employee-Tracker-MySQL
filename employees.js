@@ -1,3 +1,4 @@
+
 const mysql = require('mysql');
 const inquirer = require('inquirer');
 
@@ -10,3 +11,11 @@ const connection = mysql.createConnection({
     database: 'employee_DB',
 
 })
+
+connection.connect((err) => {
+    if(err) throw err;
+    console.log(`connected as id ${connection.threadId}`)
+
+})
+
+console.log("hello node, i'm working")
