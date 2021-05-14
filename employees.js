@@ -26,9 +26,9 @@ inquirer
         name: 'startChoice' ,
         message: 'Select an option to begin: ',
         choices: [
+            'Add Department',
             'Add Employees',
             'Add Roles',
-            'Add Department',
             'View Employee',
             'View Role',
             'View Department',
@@ -46,6 +46,10 @@ inquirer
     })
     .then((userChoice) => {
         switch (userChoice.startChoice){
+            case 'Add Department':
+                addEmployee();
+                break;
+
             case 'Add Employees':
                 addEmployee();
                 break;
@@ -53,10 +57,6 @@ inquirer
            case 'Add Roles':
                 addRoles();
                 break;    
-                
-            case 'Add Department':
-                addEmployee();
-                break;
                 
             case 'View Employee':
                 viewEmployee();
@@ -101,8 +101,38 @@ inquirer
     });
 
 };
+const addDepartment = () => {
+    
+}
 
 const addEmployee = () => {
+    inquirer
+        .prompt([
+        {
+        type:"input",
+        name: 'firstName',
+        message: 'input employee first name: ',
+        },
+
+        {
+        type:"input" ,
+        name: 'lasttName' ,
+        message: 'input employee last name: ',
+        },
+
+        {
+        type:"input" ,
+        name: 'lasttName' ,
+        message: 'input employee last name: ',
+        },
+
+        {
+        type:"input" ,
+        name: 'lasttName' ,
+        message: 'input employee last name: ',
+        }
+
+    ])
 
 }
 
@@ -110,9 +140,6 @@ const addRoles = () => {
     
 }
 
-const addDepartment = () => {
-    
-}
 
 const viewEmployee = () => {
     
