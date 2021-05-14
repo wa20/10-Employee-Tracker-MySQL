@@ -66,33 +66,33 @@ inquirer
                 viewRole();
                 break;    
                 
-            case 'Update Employee':
-                updateDepartment();
-                break;
+            // case 'Update Employee':
+            //     updateDepartment();
+            //     break;
                 
-            case 'Update Role':
-                updateRole();
-                break;
+            // case 'Update Role':
+            //     updateRole();
+            //     break;
         
-            case 'Update Employee Managers':
-                updateEmployeeManager();
-                break;
+            // case 'Update Employee Managers':
+            //     updateEmployeeManager();
+            //     break;
                 
-            case 'Delete Employee':
-                deleteEmployee();
-                break;
+            // case 'Delete Employee':
+            //     deleteEmployee();
+            //     break;
 
-            case 'Delete Role':
-                deleteRole();
-                break;
+            // case 'Delete Role':
+            //     deleteRole();
+            //     break;
                 
-            case 'Delete Department':
-                deleteDepartment();
-                break;
+            // case 'Delete Department':
+            //     deleteDepartment();
+            //     break;
 
-            case 'View Total Budget of Department':
-                departmentBudget();
-                break;
+            // case 'View Total Budget of Department':
+            //     departmentBudget();
+            //     break;
             
             case 'Exit':
                 connection.end();
