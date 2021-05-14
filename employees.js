@@ -38,10 +38,66 @@ inquirer
             'Delete Employee',
             'Delete Role',
             'Delete Department',
-            'View Total Budget of Department'
+            'View Total Budget of Department',
+            'Exit'
         ]
 
 
+    })
+    .then((userChoice) => {
+        switch (userChoice.startChoice){
+            case 'Add Employees':
+                addEmployee();
+                break;
+            
+           case 'Add Roles':
+                addRoles();
+                break;    
+                
+            case 'Add Department':
+                addEmployee();
+                break;
+                
+            case 'View Employee':
+                viewEmployee();
+                break;
+
+           case 'View Role':
+                viewRole();
+                break;    
+                
+            case 'Update Employee':
+                updateDepartment();
+                break;
+                
+            case 'Update Role':
+                updateRole();
+                break;
+        
+            case 'Update Employee Managers':
+                updateEmployeeManager();
+                break;
+                
+            case 'Delete Employee':
+                deleteEmployee();
+                break;
+
+            case 'Delete Role':
+                deleteRole();
+                break;
+                
+            case 'Delete Department':
+                deleteDepartment();
+                break;
+
+            case 'View Total Budget of Department':
+                departmentBudget();
+                break;
+            
+            case 'Exit':
+                connection.end();
+                break;
+        }
     })
 
 }
