@@ -67,7 +67,7 @@ inquirer
                 break;    
                 
             // case 'Update Employee':
-            //     updateDepartment();
+            //     updateEmployee();
             //     break;
                 
             // case 'Update Role':
@@ -98,10 +98,57 @@ inquirer
                 connection.end();
                 break;
         }
-    })
+    });
+
+};
+
+const addEmployee = () => {
 
 }
 
+const addRoles = () => {
+    
+}
+
+const addDepartment = () => {
+    
+}
+
+const viewEmployee = () => {
+    
+}
+
+const viewRole = () => {
+    
+}
+
+const updateEmployee = () => {
+    
+}
+
+const updateRole = () => {
+    
+}
+
+const updateEmployeeManager = () => {
+    
+}
+
+const deleteEmployee = () => {
+    
+}
+
+const deleteRole = () => {
+    
+}
+
+const deleteDepartment = () => {
+    
+}
+
+const departmentBudget = () => {
+    
+}
 // Add employees
 
 // Add roles
