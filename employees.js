@@ -29,7 +29,7 @@ inquirer
             'Add Department',
             'Add Employees',
             'Add Roles',
-            'View Employee',
+            'View Employees',
             'View Role',
             'View Department',
             'Update Employee',
@@ -47,7 +47,7 @@ inquirer
     .then((userChoice) => {
         switch (userChoice.startChoice){
             case 'Add Department':
-                addEmployee();
+                addDepartment();
                 break;
 
             case 'Add Employees':
@@ -58,8 +58,8 @@ inquirer
                 addRoles();
                 break;    
                 
-            case 'View Employee':
-                viewEmployee();
+            case 'View Employees':
+                viewEmployees();
                 break;
 
            case 'View Role':
@@ -102,7 +102,22 @@ inquirer
 
 };
 const addDepartment = () => {
-    
+    inquirer
+        .prompt(
+        {
+        type:"input",
+        name: 'departmentName',
+        message: 'Add department name: ',
+        }
+).then((answer) => {
+    console.log(answer.departmentName)
+    query = `INSERT INTO Department (name) VALUES ('${answer.departmentName}')`
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+    })
+    startQuery()   
+})
+
 }
 
 const addEmployee = () => {
@@ -121,29 +136,35 @@ const addEmployee = () => {
         },
 
         {
-        type:"input" ,
-        name: 'lasttName' ,
-        message: 'input employee last name: ',
+        type:"list" ,
+        name: 'roleId' ,
+        message: 'Add employee role: ',
         },
 
         {
-        type:"input" ,
-        name: 'lasttName' ,
+        type:"list" ,
+        name: 'managerID' ,
         message: 'input employee last name: ',
         }
 
-    ])
+    ]).then
 
 }
 
 const addRoles = () => {
-    
+  
 }
 
+const viewEmployees = () => {
+query = 'SELECT * FROM Employee;'
+connection.query(query, (err, res) => {
+    if (err) throw err;
+    console.table(res)
+})
 
-const viewEmployee = () => {
-    
+startQuery()   
 }
+
 
 const viewRole = () => {
     
