@@ -1,21 +1,22 @@
 USE employee_DB;
 
-INSERT INTO Department (name)
+INSERT INTO employee_DB.department; INSERT INTO Department (name)
 VALUES ('HR'),('Legal'),('Sales'),('Marketing'),('IT');
 
-INSERT INTO Employee (first_name, last_name, role_id, manager_id)
-VALUES  -- HR
+
+SELECT * FROM employee_DB.employee;INSERT INTO Employee (first_name, last_name, role_id, manager_id)
+VALUES  
+-- HR
         ('Micky', 'Mouse', 1, 3),
         ('Betty', 'Boop',1 ,3), 
         ('Clark', 'Kent', 2 ,3 ),
         ('Kermit', 'Frog', 2,3 ),
-        ('Eric', 'Cartman', 3, ),  
-
+        ('Eric', 'Cartman', 3, NULL),  
 -- Legal
         ('Lucy', 'Ricardo', 4, 5 ),
         ('Charlie', 'Brown', 4 , 5 ),
         ('Rocky', 'Balboa', 4, 5), 
-        ('Cersi', 'Lanister', 5, ), 
+        ('Cersi', 'Lanister', 5, NULL), 
 -- Sales    
         ('Kyle', 'Broflovski', 6, 8),  
         ('Dora', 'Explorer',6 , 8), 
@@ -24,26 +25,27 @@ VALUES  -- HR
         ('Miss', 'Piggy',7 , 8), 
         ('Sansa', 'Stark', 7,8), 
         ('Jon', 'Snow', 8,9), 
-        ('Bruce', 'Wayne', 9, ), 
---Marketing 
+        ('Bruce', 'Wayne', 9, NULL ), 
+-- Marketing 
         ('John', 'Mclane', 10, 12), 
         ('Buffy', 'Summers',10 ,12 ),        
         ('Jay', 'Gatsby',10 ,12 ), 
         ('Mary', 'Poppins',11 ,12 ), 
         ('Willy', 'Wonka',11 ,12 ), 
-        ('Donald' 'Trump', 12,), 
---Tech
+        ('Donald', 'Trump', 12, NULL), 
+-- Tech
         ('Scooby', 'Doo',13 ,15 ), 
         ('Stan', 'Marsh',13 ,15 ), 
         ('Sam', 'Willson', 13, 15), 
-        ('Peter', 'Parker', 14,15 ) 
+        ('Peter', 'Parker', 14,15 ),
         ('Lisa', 'Simpson', 14, 15),
         ('Carol', 'Danvers', 15, 16),  
-        ("T'Challa", 'Udaka', 16, ),;
+        ("T'Challa", 'Udaka', 16, NULL);
+        
         
 
 
-INSERT INTO Role (title, salary, department_id)
+INSERT INTO employee_DB.role; INSERT INTO Role (title, salary, department_id)
 VALUES ('HR Executive',28000,1),  --1
         ('HR Manager',39000 ,1),  --2
         ('HR Director',55000 ,1), --3
