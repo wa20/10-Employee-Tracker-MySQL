@@ -2,7 +2,7 @@
   "name": "10-Employee-Tracker-MySQL",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "employees.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
