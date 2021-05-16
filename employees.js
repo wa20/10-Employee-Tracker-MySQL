@@ -156,7 +156,7 @@ const addRoles = () => {
 }
 
 const viewEmployees = () => {
-query = 'SELECT * FROM Employee;'
+query = 'SELECT first_name, last_name, role, manager FROM Employee WHERE role '
 connection.query(query, (err, res) => {
     if (err) throw err;
     console.table(res)
