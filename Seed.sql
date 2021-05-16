@@ -41,6 +41,8 @@ VALUES
         ('Lisa', 'Simpson', 14, 29),
         ('Carol', 'Danvers', 15, 30),  
         ("T'Challa", 'Udaka', 16, NULL);
+
+     
         
         
 

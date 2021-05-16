@@ -155,8 +155,14 @@ const addRoles = () => {
   
 }
 
+
+
 const viewEmployees = () => {
-query = 'SELECT first_name, last_name, role, manager FROM Employee WHERE role '
+query = "SELECT a.first_name, a.last_name, Role.title, Role.salary, Department.department, concat(b.first_name, ' ', b.last_name) AS manager \
+         FROM Employee a \
+         JOIN Role on Role.id=a.role_id \
+         JOIN Department on Role.department_id=Department.id \
+         JOIN Employee b on a.manager_id=b.id"
 connection.query(query, (err, res) => {
     if (err) throw err;
     console.table(res)
@@ -167,7 +173,8 @@ startQuery()
 
 
 const viewRole = () => {
-    
+    query = "SELECT * FROM Role"
+    connection
 }
 
 const updateEmployee = () => {
