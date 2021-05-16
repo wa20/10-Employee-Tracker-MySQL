@@ -144,10 +144,26 @@ const addEmployee = () => {
         {
         type:"list" ,
         name: 'managerID' ,
-        message: 'input employee last name: ',
+        message: 'Select Manager ID below: ',
+        choice:[
+            '5',
+            '9',
+            '16',
+            '17',
+            '23',
+            '29',
+            '30'
+        ]
         }
-
-    ]).then
+    ]).then((answer) => {
+        query = `INESERT INTO Employee (first_name, last_name, role_id, manager_id) \
+         VALUES(${answer.firstName}, ${answer.lastName}, ${answer.roleID}, ${answer.managerID})`
+        connection.query(query, (err, res) => {
+            if (err) throw err;
+            console.table(res)
+        })
+        startQuery()
+    })
 
 }
 
