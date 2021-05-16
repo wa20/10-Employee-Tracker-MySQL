@@ -174,7 +174,11 @@ startQuery()
 
 const viewRole = () => {
     query = "SELECT * FROM Role"
-    connection
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.table(res)
+    })
+    startQuery()
 }
 
 const updateEmployee = () => {
