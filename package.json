@@ -20,6 +20,8 @@
   "dependencies": {
     "console.table": "^0.10.0",
     "inquirer": "^8.0.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "mysql-promisify": "^1.0.2",
+    "promisfy": "^1.2.0"
   }
 }

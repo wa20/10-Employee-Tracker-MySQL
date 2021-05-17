@@ -1,237 +1,252 @@
-
-const mysql = require('mysql');
-const inquirer = require('inquirer');
+const mysql = require("mysql");
+const inquirer = require("inquirer");
+const {MySQL} = require("mysql-promisify");
 
 const connection = mysql.createConnection({
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
+  host: "localhost",
+  port: 3306,
+  user: "root",
 
-    password: 'Winter01',
-    database: 'employee_DB',
-
-})
+  password: "Winter01",
+  database: "employee_DB",
+});
 
 connection.connect((err) => {
-    if(err) throw err;
-    console.log(`connected as id ${connection.threadId}`);
-    startQuery();
-})
+  if (err) throw err;
+  console.log(`connected as id ${connection.threadId}`);
+  startQuery();
+});
 
 //
 const startQuery = () => {
-inquirer
+  inquirer
     .prompt({
-        type:"list" ,
-        name: 'startChoice' ,
-        message: 'Select an option to begin: ',
-        choices: [
-            'Add Department',
-            'Add Employees',
-            'Add Roles',
-            'View Employees',
-            'View Role',
-            'View Department',
-            'Update Employee',
-            'Update Role',
-            'Update Employee Managers',
-            'Delete Employee',
-            'Delete Role',
-            'Delete Department',
-            'View Total Budget of Department',
-            'Exit'
-        ]
-
-
+      type: "list",
+      name: "startChoice",
+      message: "Select an option to begin: ",
+      choices: [
+        "Add Department",
+        "Add Employees",
+        "Add Roles",
+        "View Employees",
+        "View Role",
+        "View Department",
+        "Update Employee",
+        "Update Role",
+        "Update Employee Managers",
+        "Delete Employee",
+        "Delete Role",
+        "Delete Department",
+        "View Total Budget of Department",
+        "Exit",
+      ],
     })
     .then((userChoice) => {
-        switch (userChoice.startChoice){
-            case 'Add Department':
-                addDepartment();
-                break;
+      switch (userChoice.startChoice) {
+        case "Add Department":
+          addDepartment();
+          break;
 
-            case 'Add Employees':
-                addEmployee();
-                break;
-            
-           case 'Add Roles':
-                addRoles();
-                break;    
-                
-            case 'View Employees':
-                viewEmployees();
-                break;
+        case "Add Employees":
+          addEmployee();
+          break;
 
-           case 'View Role':
-                viewRole();
-                break;    
-                
-            // case 'Update Employee':
-            //     updateEmployee();
-            //     break;
-                
-            // case 'Update Role':
-            //     updateRole();
-            //     break;
-        
-            // case 'Update Employee Managers':
-            //     updateEmployeeManager();
-            //     break;
-                
-            // case 'Delete Employee':
-            //     deleteEmployee();
-            //     break;
+        case "Add Roles":
+          addRoles();
+          break;
 
-            // case 'Delete Role':
-            //     deleteRole();
-            //     break;
-                
-            // case 'Delete Department':
-            //     deleteDepartment();
-            //     break;
+        case "View Employees":
+          viewEmployees();
+          break;
 
-            // case 'View Total Budget of Department':
-            //     departmentBudget();
-            //     break;
-            
-            case 'Exit':
-                connection.end();
-                break;
-        }
+        case "View Role":
+          viewRole();
+          break;
+
+        // case 'Update Employee':
+        //     updateEmployee();
+        //     break;
+
+        // case 'Update Role':
+        //     updateRole();
+        //     break;
+
+        // case 'Update Employee Managers':
+        //     updateEmployeeManager();
+        //     break;
+
+        // case 'Delete Employee':
+        //     deleteEmployee();
+        //     break;
+
+        // case 'Delete Role':
+        //     deleteRole();
+        //     break;
+
+        // case 'Delete Department':
+        //     deleteDepartment();
+        //     break;
+
+        // case 'View Total Budget of Department':
+        //     departmentBudget();
+        //     break;
+
+        case "Exit":
+          connection.end();
+          break;
+      }
     });
-
 };
 const addDepartment = () => {
-    inquirer
-        .prompt(
-        {
-        type:"input",
-        name: 'departmentName',
-        message: 'Add department name: ',
-        }
-).then((answer) => {
-    console.log(answer.departmentName)
-    query = `INSERT INTO Department (name) VALUES ('${answer.departmentName}')`
-    connection.query(query, (err, res) => {
+  inquirer
+    .prompt({
+      type: "input",
+      name: "departmentName",
+      message: "Add department name: ",
+    })
+    .then((answer) => {
+      console.log(answer.departmentName);
+      query = `INSERT INTO Department (name) VALUES ('${answer.departmentName}')`;
+      connection.query(query, (err, res) => {
         if (err) throw err;
-    })
-    startQuery()   
-})
+      });
+      startQuery();
+    });
+};
 
-}
 
-const addEmployee = () => {
+
+const addEmployee = async () => {
+  connection.query("SELECT * FROM Role", (err, res) => {
+    if (err) throw err;
     inquirer
-        .prompt([
+      .prompt([
         {
-        type:"input",
-        name: 'firstName',
-        message: 'input employee first name: ',
+          type: "input",
+          name: "firstName",
+          message: "input employee first name: ",
         },
 
         {
-        type:"input" ,
-        name: 'lasttName' ,
-        message: 'input employee last name: ',
+          type: "input",
+          name: "lastName",
+          message: "input employee last name: ",
+        },
+
+        {
+          type: "list",
+          name: "roleId",
+          choices() {
+            return res.map(({ id, title }) => {
+              return { name: title, value: id };
+            });
+          },
+          message: "Add employee role: ",
         },
 
         {
         type:"list" ,
-        name: 'roleId' ,
-        message: 'Add employee role: ',
-        },
-
-        {
-        type:"list" ,
-        name: 'managerID' ,
-        message: 'Select Manager ID below: ',
-        choice:[
-            '5',
-            '9',
-            '16',
-            '17',
-            '23',
-            '29',
-            '30'
-        ]
+        name: 'Manager',
+        message: 'Select Manager below: ',
+        async choices() {
+            return await getAllManagers();
         }
-    ]).then((answer) => {
-        query = `INESERT INTO Employee (first_name, last_name, role_id, manager_id) \
-         VALUES(${answer.firstName}, ${answer.lastName}, ${answer.roleID}, ${answer.managerID})`
+        }
+      ])
+      .then((answer) => {
+        query = `INSERT INTO Employee (first_name, last_name, role_id, manager_id) \
+        VALUES(${answer.firstName}, ${answer.lastName}, ${answer.roleId}, ${answer.managerId})`;
         connection.query(query, (err, res) => {
-            if (err) throw err;
-            console.table(res)
-        })
-        startQuery()
-    })
+          if (err) throw err;
+          console.table(res);
+        });
+        startQuery();
+      });
+  });
+};
 
-}
+//function so as to loop through manager options
+const getAllManagers = async () => {
+    let managers = [];
+    queryStatement = "SELECT concat(first_name, ' ', last_name) as Manager FROM Employee where manager_id=id";
+    const { results } = await connection.query({sql: queryStatement});
+    results.forEach(({Manager}) => managers.push(Manager));
+    return managers;
+  };
+
 
 const addRoles = () => {
-  
-}
-
-
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "title",
+      message: "Input new job title: ",
+    },
+    {
+      type: "input",
+      name: "title",
+      message: "Input new job title: ",
+    },
+    {
+      type: "input",
+      name: "department",
+      message: "Input new job title: ",
+    },
+  ]);
+};
 
 const viewEmployees = () => {
-query = "SELECT a.first_name, a.last_name, Role.title, Role.salary, Department.department, concat(b.first_name, ' ', b.last_name) AS manager \
+  query =
+    "SELECT a.first_name, a.last_name, Role.title, Role.salary, Department.department, concat(b.first_name, ' ', b.last_name) AS manager \
          FROM Employee a \
          JOIN Role on Role.id=a.role_id \
          JOIN Department on Role.department_id=Department.id \
-         JOIN Employee b on a.manager_id=b.id"
-connection.query(query, (err, res) => {
+         JOIN Employee b on a.manager_id=b.id";
+  connection.query(query, (err, res) => {
     if (err) throw err;
-    console.table(res)
-})
+    console.table(res);
+  });
 
-startQuery()   
-}
-
+  startQuery();
+};
 
 const viewRole = () => {
-    query = "SELECT * FROM Role"
-    connection.query(query, (err, res) => {
-        if (err) throw err;
-        console.table(res)
-    })
-    startQuery()
-}
+  query = "SELECT * FROM Role";
+  connection.query(query, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+  });
+  startQuery();
+};
 
-const updateEmployee = () => {
-    
-}
+// const getAllManagers = () => {
+//     let managers = []
+//     query = "SELECT concat(first_name, ' ', last_name) as Manager FROM Employee where manager_id=id";
+//     connection.query(query, (err, res) => {
+//       if (err) throw err;
+//       res.forEach(({Manager}) => managers.push(Manager))
+//       return res;
+//     });
+//   };
 
-const updateRole = () => {
-    
-}
+const updateEmployee = () => {};
 
-const updateEmployeeManager = () => {
-    
-}
+const updateRole = () => {};
 
-const deleteEmployee = () => {
-    
-}
+const updateEmployeeManager = () => {};
 
-const deleteRole = () => {
-    
-}
+const deleteEmployee = () => {};
 
-const deleteDepartment = () => {
-    
-}
+const deleteRole = () => {};
 
-const departmentBudget = () => {
-    
-}
+const deleteDepartment = () => {};
+
+const departmentBudget = () => {};
 // Add employees
 
 // Add roles
 
 // Add department
-
-
-
 
 // View employee
 
@@ -239,13 +254,9 @@ const departmentBudget = () => {
 
 // View department
 
-
-
 // Update employee
 
 // Upadate role
-
-
 
 //Bonus
 // Update employee managers
@@ -256,7 +267,3 @@ const departmentBudget = () => {
 
 // View the total utilized budget of a departemtn -- combined salaries of all emplyees in that department
 
-
-
-
-console.log("hello node, i'm working")
