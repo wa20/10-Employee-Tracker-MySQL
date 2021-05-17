@@ -31,13 +31,13 @@ const startQuery = () => {
         "View Employees",
         "View Role",
         "View Department",
-        "Update Employee",
-        "Update Role",
-        "Update Employee Managers",
-        "Delete Employee",
-        "Delete Role",
-        "Delete Department",
-        "View Total Budget of Department",
+        // "Update Employee",
+        // "Update Role",
+        // "Update Employee Managers",
+        // "Delete Employee",
+        // "Delete Role",
+        // "Delete Department",
+        // "View Total Budget of Department",
         "Exit",
       ],
     })
@@ -229,41 +229,72 @@ const viewRole = () => {
 //     });
 //   };
 
-const updateEmployee = () => {};
+// const updateRole = () => {
+//     query =
+//         "SELECT a.first_name, a.last_name, Role.title, Role.salary, Department.department, concat(b.first_name, ' ', b.last_name) AS manager \
+//              FROM Employee a \
+//              JOIN Role on Role.id=a.role_id \
+//              JOIN Department on Role.department_id=Department.id \
+//              JOIN Employee b on a.manager_id=b.id";
+//       connection.query(query, (err, res) => {
+//         if (err) throw err;
+//         console.table(res);
+//         inquirer.prompt([
+//             {
+//                 type: 'list',
+//                 name: 'employee',
+//                 async choices() {
+//                    let employee = [];
+//                    results.forEach(({id, first_name, last_name, roleId})  => {
+//                        employee.push({value: id, name: first_name + ' ' + last_name})
+//                    }) 
+//                    return employee
+//                 },   
+//                 message: 'select employee to update: '  
+//             },
+//             {
+//                 name: 'roleId',
+//                 type: 'list',
+//                 choices() {
+//                   let newRole = [];
+//                   results.forEach(({ title, role_id }) => {
+//                     newRole.push({ name: title, value: role_id });
+//                   });
+//                   return choiceArray;
+//                 },
+//                 message: 'Select new role: '  
+//             }
+//         ]).then((answer) => {
+//             query = 'Upadate Employee SET ? WHERE ?';
+//             connection.query([
+//                 {
+//                     role_id: answer.role
+//                 },
+//                 {
+//                     Employee_id:answer.employee
+//                 }
+//             ],
+//             (err, res) => {
+//                 if(err) throw err;
+//                 console.log('Role Updated: ')
+//                 startQuery();
+//             })
+//         })
+   
+//   })
 
-const updateRole = () => {};
+// }
 
-const updateEmployeeManager = () => {};
 
-const deleteEmployee = () => {};
 
-const deleteRole = () => {};
+// const updateEmployeeManager = () => {};
 
-const deleteDepartment = () => {};
+// const deleteEmployee = () => {};
 
-const departmentBudget = () => {};
-// Add employees
+// const deleteRole = () => {};
 
-// Add roles
+// const deleteDepartment = () => {};
 
-// Add department
+// const departmentBudget = () => {};
 
-// View employee
-
-// View role
-
-// View department
-
-// Update employee
-
-// Upadate role
-
-//Bonus
-// Update employee managers
-
-// View employee manager
-
-// Delete departments, roles, and employees
-
-// View the total utilized budget of a departemtn -- combined salaries of all emplyees in that department
 
