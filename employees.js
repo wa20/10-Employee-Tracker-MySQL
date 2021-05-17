@@ -147,10 +147,10 @@ const addEmployee = async () => {
         {
         type:"list" ,
         name: 'Manager',
-        message: 'Select Manager below: ',
         async choices() {
             return await getAllManagers();
-        }
+        },
+        message: 'Select Manager below: ',
         }
       ])
       .then((answer) => {
@@ -165,12 +165,12 @@ const addEmployee = async () => {
   });
 };
 
-//function so as to loop through manager options
+// function so as to loop through manager options
 const getAllManagers = async () => {
     let managers = [];
-    queryStatement = "SELECT concat(first_name, ' ', last_name) as Manager FROM Employee where manager_id=id";
-    const { results } = await connection.query({sql: queryStatement});
-    results.forEach(({Manager}) => managers.push(Manager));
+    query = "SELECT concat(first_name, ' ', last_name) as Manager FROM Employee where manager_id=id";
+    const { res } = await connection.query({sql: query});
+    res.forEach(({Manager}) => managers.push(Manager));
     return managers;
   };
 
