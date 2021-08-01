@@ -5,10 +5,10 @@ const {MySQL} = require("mysql-promisify");
 const connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
-  user: "root",
 
-  password: "Winter01",
-  database: "employee_DB",
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
 connection.connect((err) => {
@@ -106,6 +106,7 @@ const addDepartment = () => {
     })
     .then((answer) => {
       console.log(answer.departmentName);
+
       query = `INSERT INTO Department (name) VALUES ('${answer.departmentName}')`;
       connection.query(query, (err, res) => {
         if (err) throw err;
@@ -218,6 +219,12 @@ const viewRole = () => {
   });
   startQuery();
 };
+
+
+(async () => {
+    await startQuery();
+})();
+
 
 // const getAllManagers = () => {
 //     let managers = []
