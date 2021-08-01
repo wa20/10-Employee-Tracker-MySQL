@@ -1,23 +1,27 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-const {MySQL} = require("mysql-promisify");
+require('dotenv').config()
+// const {MySQL} = require("mysql-promisify");
 
 const connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
 
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  user: "root",
+  password: "Winter01",
+  database: "employee_DB",
 });
 
 connection.connect((err) => {
   if (err) throw err;
   console.log(`connected as id ${connection.threadId}`);
-  startQuery();
+  // startQuery();
 });
 
-//
+
+
+
+// start Query
 const startQuery = () => {
   inquirer
     .prompt({
@@ -25,24 +29,31 @@ const startQuery = () => {
       name: "startChoice",
       message: "Select an option to begin: ",
       choices: [
-        "Add Department",
-        "Add Employees",
-        "Add Roles",
+// views
         "View Employees",
         "View Role",
         "View Department",
-        // "Update Employee",
-        // "Update Role",
-        // "Update Employee Managers",
+        "View Total Budget of Department",
+
+// add
+        "Add Department",
+        "Add Employees",
+        "Add Roles",
+
+// update
+        "Update Employee",
+        "Update Role",
+        "Update Employee Managers",
+// delete
         // "Delete Employee",
         // "Delete Role",
         // "Delete Department",
-        // "View Total Budget of Department",
         "Exit",
       ],
     })
     .then((userChoice) => {
       switch (userChoice.startChoice) {
+// add
         case "Add Department":
           addDepartment();
           break;
@@ -55,6 +66,7 @@ const startQuery = () => {
           addRoles();
           break;
 
+// views
         case "View Employees":
           viewEmployees();
           break;
@@ -63,33 +75,39 @@ const startQuery = () => {
           viewRole();
           break;
 
-        // case 'Update Employee':
-        //     updateEmployee();
-        //     break;
+        case "View Department":
+          viewDepartment();
+          break;
 
-        // case 'Update Role':
-        //     updateRole();
-        //     break;
+        case "View Total Budget of Department":
+          departmentBudget();
+          break;
 
-        // case 'Update Employee Managers':
-        //     updateEmployeeManager();
-        //     break;
+// update
+        case "Update Employee":
+          updateEmployee();
+          break;
 
-        // case 'Delete Employee':
-        //     deleteEmployee();
-        //     break;
+        case "Update Role":
+          updateRole();
+          break;
 
-        // case 'Delete Role':
-        //     deleteRole();
-        //     break;
+        case "Update Employee Managers":
+          updateEmployeeManager();
+          break;
 
-        // case 'Delete Department':
-        //     deleteDepartment();
-        //     break;
+// delete
+        // case "Delete Employee":
+        //   deleteEmployee();
+        //   break;
 
-        // case 'View Total Budget of Department':
-        //     departmentBudget();
-        //     break;
+        // case "Delete Role":
+        //   deleteRole();
+        //   break;
+
+        // case "Delete Department":
+        //   deleteDepartment();
+        //   break;
 
         case "Exit":
           connection.end();
@@ -97,6 +115,9 @@ const startQuery = () => {
       }
     });
 };
+
+
+
 const addDepartment = () => {
   inquirer
     .prompt({
@@ -196,6 +217,10 @@ const addRoles = () => {
   ]);
 };
 
+
+//views sections
+
+// view employees
 const viewEmployees = () => {
   query =
     "SELECT a.first_name, a.last_name, Role.title, Role.salary, Department.department, concat(b.first_name, ' ', b.last_name) AS manager \
@@ -211,6 +236,8 @@ const viewEmployees = () => {
   startQuery();
 };
 
+
+//view role
 const viewRole = () => {
   query = "SELECT * FROM Role";
   connection.query(query, (err, res) => {
@@ -219,6 +246,18 @@ const viewRole = () => {
   });
   startQuery();
 };
+
+
+//view department
+const viewDepartment = () => {
+  query = "SELECT * FROM Department";
+  connection.query(query, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+  });
+  startQuery();
+};
+
 
 
 (async () => {
