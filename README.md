@@ -3,8 +3,9 @@
   ## Employee MySQL Tracker
 
   ## Description
+  A content management system (CMS) that allows the management of employees data. Built using node, inquirer, and MySQL.
 
- 
+  Employee data can be viewed  and amended within the terminal.
 
   ## Contents Table
   - [Installation](#Installation)
@@ -19,6 +20,8 @@ First ensure that you have node.js and relevent npm modules installed on your de
 
 ## Usage
 Please view below:
+
+[Demo](https://drive.google.com/file/d/10joLx2dJe7HbuSqvUXJnWRHThXuivZz8/view?usp=sharing)
 
 ## Collaborators
 none
