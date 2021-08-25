@@ -6,6 +6,8 @@
   A content management system (CMS) that allows the management of employees data. Built using node, inquirer, and MySQL.
 
   Employee data can be viewed  and amended within the terminal.
+  
+  Note: The ability to change exisitng employee data will be part of the next development update.
 
   ## Contents Table
   - [Installation](#Installation)
