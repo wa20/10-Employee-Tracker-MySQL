@@ -1,16 +1,18 @@
+require("dotenv").config();
 const mysql = require("mysql");
 const { MySQL } = require("mysql-promisify");
 const inquirer = require("inquirer");
-require("dotenv").config();
+
 // const {MySQL} = require("mysql-promisify");
 
+
+//connect to localhost schema
 const connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
-
-  user: "root",
-  password: "Winter01",
-  database: "employee_DB",
+  user: process.env.DB_USER ,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
 connection.connect((err) => {
@@ -19,12 +21,14 @@ connection.connect((err) => {
   // startQuery();
 });
 
+
+
 // start Query
 const startQuery = () => {
   inquirer
     .prompt({
       type: "list",
-      name: "startChoice",
+      name: "selectChoice",
       message: "Select an option to begin: ",
       choices: [
         // views
@@ -50,7 +54,7 @@ const startQuery = () => {
       ],
     })
     .then((userChoice) => {
-      switch (userChoice.startChoice) {
+      switch (userChoice.selectChoice) {
         // views
         case "View Employees":
           viewEmployees();
