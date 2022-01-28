@@ -1,7 +1,7 @@
 require("dotenv").config();
-const mysql = require("mysql");
-const { MySQL } = require("mysql-promisify");
+const mysql = require("mysql2");
 const inquirer = require("inquirer");
+const logo = require("asciiart-logo");
 
 // const {MySQL} = require("mysql-promisify");
 
@@ -20,6 +20,14 @@ connection.connect((err) => {
   console.log(`connected as id ${connection.threadId}`);
   // startQuery();
 });
+
+
+// console log start logo
+startLogo();
+function startLogo() {
+  const logoText = logo({ name: "Management Module" }).render();
+  console.log(logoText);
+}
 
 
 
