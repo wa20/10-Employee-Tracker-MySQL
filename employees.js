@@ -10,8 +10,8 @@ const logo = require("asciiart-logo");
 const connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
-  user: process.env.DB_USER ,
-  password: process.env.DB_PASSWORD,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD ,
   database: process.env.DB_NAME,
 });
 
@@ -150,7 +150,7 @@ const addDepartment = () => {
 };
 
 //add employee
-const addEmployee = async () => {
+const addEmployee =  () => {
   connection.query(
     "SELECT Employee.first_name, Employee.last_name, Employee.id, Role.title, Role.id FROM Employee LEFT JOIN Role ON Employee.id = Role.id;",
     // "SELECT * FROM employee, role WHERE role.id = role_id ",
@@ -323,7 +323,7 @@ function updateRole() {
             "UPDATE employee SET ? WHERE ?",
             [
               {
-                role_id: answer.role,
+               role_id: answer.role,
               },
               {
                 id: answer.employee,
@@ -339,6 +339,56 @@ function updateRole() {
     }
   );
 }
+
+
+//update Employee
+const updateEmployee = () => {
+  return connection.query(
+    "SELECT Employee.first_name, Employee.last_name, employee.id, role.title, role.id FROM Employee LEFT JOIN Role ON EMployee.id = Role.id",
+
+    (err, res) => {
+      inquirer.prompt([
+        {
+          name: "employee",
+          type: "list",
+          choices() {
+            console.log("response console log",res);
+            return res.map(( {first_name, last_name, id}) => {
+              return { name: first_name + " " + last_name, value: id };
+            });
+          },
+          message: "select employee to update ",
+        },
+        {
+          name: "role",
+          type: "list",
+          choices() {
+            return res.map(({ id, title }) => {
+              return {name: title, value: id}
+            });
+          },
+          message: "select new role"
+        },
+      ]).then((answer) => {
+        connection.query(
+          "UPDATE  employee SET ? WHERE ?",
+          [{
+            role_id: answer.role,
+          },
+        {
+          id: answer.employee
+        }],
+          function (err, res){
+            if (err) throw err;
+            console.log(`the ${answer.employee} role has been updated`)
+            startQuery();
+          }
+        )
+      })
+    }
+  );
+};
+
 
 // const updateEmployeeManager = () => {};
 
